@@ -1,2 +1,5 @@
 selenium
 pytest
+requests
+pytest
+pydantic
