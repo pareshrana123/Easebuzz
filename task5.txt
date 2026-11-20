@@ -1,0 +1,38 @@
+1. Sprint velocity is dropping due to flaky automation tests. How will you handle this situation?
+
+Answer:
+
+As a QA automation, I will take the following things:
+
+Identify flaky tests: Analyze failed test reports and identify tests that fail intermittently.
+
+Root cause analysis: Check whether failures are caused by synchronization issues, test data, environment instability, or automation scripts.
+
+Prioritize fixes: Fix critical and frequently failing tests first.
+
+Framework stability Improvement: Implement explicit waits, reusable methods, proper test data management, and reliable locators.
+
+Disable flaky tests: Temporarily separate unstable tests from the main regression pipeline without ignoring them permanently.
+
+Team ownership: Assign responsibilities among the QA engineers and track progress through daily stand-ups.
+
+
+
+
+2. During production release, you find 2 critical bugs reported by the client that were missed in QA. What's your approach to fix gaps in process and testing?
+
+Answer:
+
+As a QA, my first priority would be to minimize customer impact and prevent further production issues.
+
+Immediate action: Reproduce both bugs, assess their impact, and communicate with developers, product owners, and stakeholders.
+
+Prioritize fixes: Treat both issues as critical, coordinate hotfix development, and perform focused validation before deployment.
+
+Root cause analysis: Conduct a retrospective to understand why these bugs escaped QA.
+
+Improve test coverage: Add new test cases covering the missed scenarios and related edge cases.
+
+Strengthen regression testing: Include the new scenarios in the regression automation suite.
+
+Continuous monitoring: Monitor production after deployment and track recurring defects.
