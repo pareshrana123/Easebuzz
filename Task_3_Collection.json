@@ -1,0 +1,151 @@
+{
+  "info": {
+    "_postman_id": "9c7b5d3e-8a42-4f11-b2a3-6c8d9e0f1a2b",
+    "name": "Task 3 - Postman Automation (JSONPlaceholder)",
+    "description": "Automated API checks for GET /posts, POST /posts, and DELETE /posts/{id} using JSONPlaceholder.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://jsonplaceholder.typicode.com"
+    },
+    {
+      "key": "postId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "GET - Fetch Posts",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/posts",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "posts"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Response is a JSON array', function () {",
+              "    pm.expect(pm.response.json()).to.be.an('array');",
+              "});",
+              "",
+              "pm.test('Posts array is not empty', function () {",
+              "    pm.expect(pm.response.json().length).to.be.greaterThan(0);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "POST - Create Post",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Postman Automation Test\",\n  \"body\": \"Created by Postman collection test\",\n  \"userId\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/posts",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "posts"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 201 Created', function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "const responseData = pm.response.json();",
+              "const requestData = JSON.parse(pm.request.body.raw);",
+              "",
+              "pm.test('Response contains the same title', function () {",
+              "    pm.expect(responseData.title).to.eql(requestData.title);",
+              "});",
+              "",
+              "pm.test('Response contains the same body', function () {",
+              "    pm.expect(responseData.body).to.eql(requestData.body);",
+              "});",
+              "",
+              "pm.test('Response contains userId', function () {",
+              "    pm.expect(responseData.userId).to.eql(requestData.userId);",
+              "});",
+              "",
+              "pm.test('Response contains an id', function () {",
+              "    pm.expect(responseData).to.have.property('id');",
+              "});",
+              "",
+              "pm.collectionVariables.set('postId', responseData.id);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "DELETE - Delete Created Post",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/posts/{{postId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "posts",
+            "{{postId}}"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200 or 204', function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200, 204]);",
+              "});"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
